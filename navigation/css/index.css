@@ -53,13 +53,13 @@
     border-right: 5px solid #882323;
     border-radius: 5px;
     margin-top: 40px;
-    background: red;
 }
 .item{
     display: inline-block;
 }
 .title{
     display: inline-block;
+    position: relative;
     height: 40px;
     width: 200px;
     color: #fff;
@@ -69,8 +69,10 @@
     text-align: center;
     background: #000;
     margin: 0 80px;
+    overflow: hidden;
 }
 .subs{
+   
     position: absolute;
     left: 0;
     right: 0;
@@ -80,6 +82,10 @@
     height: 1000px;
     padding: 50px 0 100px 0;
     overflow: hidden;
+    opacity: 0;
+}
+.active .subs{
+    opacity: 1;
 }
 .subs li img{
     width: 500px;
@@ -141,26 +147,35 @@
     animation-delay: 1.5s;
 }
 .slider{
-   position: absolute;
+    position: absolute;
     width: 200px;
     height: 5px;
     border-radius: 5px;
     background: #e21010;
     margin: 5px 0;
-    margin-left: 260px;
+    left: 260px;
+    transition: left .3s linear;
 }
 
 .water{
     position: absolute;
     width: 80px;
     height: 80px;
-    background: #8a8080;
+    background: #e21010;
     border-radius: 50%;
+    transform: scale(0);
     opacity: 1;
-    transition: all .25s ;
+    animation: clickwater 1s  forwards;
+   
 }
+@keyframes clickwater{
 
-.waterClick{
-    transform: scale(2);
-    opacity: 0;
+    /* 这个地方，如果直接写100%，没有display：none的话，第二次是无法点击相同一个位置的*/
+    99%{
+        transform: scale(2);
+        opacity: 0;
+    }
+    100%{
+        display: none;
+    }
 }
