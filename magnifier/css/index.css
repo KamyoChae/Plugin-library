@@ -1,0 +1,30 @@
+.wrapper{
+    width: 1000px;
+    margin:100px auto;
+}
+.box, .show{
+    display: inline-block;
+    position: relative;
+    width: 480px;
+    height: 345px;
+    border: 1px solid #b19999;
+    background-size: cover;
+}
+.box{
+    background-image: url(../images/z.jpg);
+}
+.show{
+    display: none;
+    background-image: url();
+    background-repeat: no-repeat;
+}
+.rect{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 96px;
+    height: 69px;
+    background: blue;
+    opacity: 0;
+
+}
