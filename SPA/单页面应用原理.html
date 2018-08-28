@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+.wrapper{
+    position: relative;
+    width: 420px;
+    height: 420px;
+    margin: 100px auto;
+    border: 1px solid #000;
+}
+.head{
+    display: flex;
+    width: 100%;
+    height: 10%;
+    background: red;
+}
+button{
+    flex-grow: 1;
+    color: #fff;
+    border: none;
+    border-right: 1px solid #fff;
+    background: #0091ca;
+}
+</style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="head">
+            <button data="one">111</button>
+            <button data="two">222</button>
+            <button data="three">333</button>
+        </div>
+        <div class="content">
+            <div class="item"></div>
+        </div>
+
+
+    </div>
+    <script>
+        
+        var page = null;
+        var head = document.getElementsByClassName("head")[0]
+        var dom = document.getElementsByClassName("item")[0]
+        function init(){
+            history.replaceState({},null,"?one")
+            ajax('GET', './getData.php', true, 'page=one', doData)
+        }
+        init()
+        function doData(res){
+            dom.innerHTML = res
+        }
+        
+        head.addEventListener("click",function(e){
+            /**
+            * 当用户点击按钮的时候
+            * 给页面存入一条历史记录 然后
+            * 进行ajax刷新页面数据 
+            */
+            page = e.target.getAttribute("data")
+            history.pushState({newPage:page}, null, "?" + page) // state title url
+            ajax("GET", "./getData.php", true, "page=" + page, doData)
+        })
+
+        window.addEventListener("popstate", function(e){
+
+            var newPage = e.state.newPage // 获取上一次存储到history.state.newPage里面的值 放到newPage中
+
+            // 重新获取一ajax请求
+            ajax("GET", "./getData.php", true, "page=" + newPage, doData)
+        })
+
+        function ajax(method, url, flag, data, callback){
+            var app = null;
+            // 兼容ie
+            if(window.XMLHttpRequest){
+                app = new XMLHttpRequest();
+            }else{
+                app = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            // 如果是GET方法 直接凭借在地址后面 如果是POST方法 修改编码然后发送
+            if(method == "GET"){
+                app.open(method, url + "?" +data, flag)
+                app.send()
+            }else if(method == "POST"){
+                app.open(method, url, flag);
+                app.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+                app.send(data)
+            }
+
+            app.onreadystatechange = function(){
+                if(app.readyState == 4){
+                    if(app.status == 200){
+                        callback(app.responseText)
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
