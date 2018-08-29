@@ -6,11 +6,14 @@
 body{
     background:#2e2c2c;
 }
-.wrapper{
+.wrapper,.box{
     position: relative;
-    width: 520px;
-    height: 320px;
+    width: 800px;
+    height: 520px;
     background: #fff;
+    overflow: hidden;
+}
+.wrapper{
     margin: 100px auto;
 }
 .box ul{
@@ -60,9 +63,27 @@ body{
 }
 .box-dotted li{
     display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 2px;
+    width: 13px;
+    height: 13px;
+    margin: 5px;
     border-radius: 50%;
-    background: red;
+    background: #fff;
+}
+.box-ul {
+    position: absolute;
+    height: 100%;
+    width: 500%; /* 需要动态计算 */
+}
+.box-ul li{
+    float: left;
+    width: 800px; /* 需要动态计算 */
+    height: 100%;
+}
+.box-ul li img{
+    width: inherit;
+    height: inherit;
+}
+
+.active{
+    background: #ff1302 !important;
 }
