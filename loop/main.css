@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background:#2e2c2c;
+}
+.wrapper{
+    position: relative;
+    width: 520px;
+    height: 320px;
+    background: #fff;
+    margin: 100px auto;
+}
+.box ul{
+    list-style: none;
+}
+.btn-left, .btn-right, .box-dotted{
+    position: absolute;
+    cursor: pointer;
+}
+.btn-left, .btn-right{
+    top: 50%;
+    transform: translate(0,-50%);
+    width: 40px;
+    height: 40px;
+    background: #2e2c2c;
+    opacity: .8;
+}
+.btn-right{
+    right: 0;
+}
+.btn-left::before, .btn-right::before{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    content: "";
+    width: 30%;
+    height: 30%;
+    border: 2px solid #fff;
+    border-right: none;
+    border-top: none;
+    transform: rotateZ(45deg);
+}
+.btn-right::before{
+    transform: rotateZ(-135deg)
+}
+.box-dotted{
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 20px;
+   text-align: center;
+}
+.box-dotted li{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 2px;
+    border-radius: 50%;
+    background: red;
+}
