@@ -1,15 +1,15 @@
-(function(magnifier){
-    if(window){
+(function (magnifier) {
+    if (window) {
         window.magnifier = magnifier
     }
 
-})(function magnifier(obj){
+})(function magnifier(obj) {
     var show = obj.show // 展示图片
-    
+
     var box = obj.box // 获取图片盒子
-    
+
     var rect = obj.rect // 获取半透明色块
-    
+
     /**
      * 思路：鼠标移入 触发事件 显示半透明色块 计算边距离
      * 一开始的想法是鼠标进入时创建一个dom节点作为半透明覆盖层
@@ -35,30 +35,36 @@
      * offsetParent 元素距离最近的定位（relative,absolute）祖先元素，递归上溯，如果没有祖先元素是定位的话，会返回null
      */
     var rectWidth = rect.clientWidth // 获取半透明色块宽高
-    var rectHeight = rect.clientHeight 
-    
+    var rectHeight = rect.clientHeight
+
     var proportion = box.clientWidth / rectWidth // 宽度比 倍数
-    
+    var maxLeft = box.clientWidth - rectWidth
+    var maxtop = box.clientHeight - rectHeight
+
     box.addEventListener("mouseenter", function (e) {
         rect.style.opacity = .2
-        show.style.display = "inline-block"    
+        show.style.display = "inline-block"
     })
     var leftNum = 0, // 用来定位放大
         topNum = 0
-    
+
     box.addEventListener("mousemove", function (e) {
 
-        // 第一种方法
         // 使用从上一次的水波纹效果中学习到的 clientX 和 getBoundingClientRect()
         // 感觉下面这段代码还可以优化
-        leftNum = Math.ceil(e.clientX - box.getBoundingClientRect().left - rectWidth / 2)
-        rightNum = Math.ceil(box.getBoundingClientRect().right - e.clientX - rectWidth / 2)
-        topNum = Math.ceil(e.clientY - box.getBoundingClientRect().top - rectHeight / 2)
-        bottNum = Math.ceil(box.getBoundingClientRect().bottom - e.clientY - rectHeight / 2)
+        leftNum = Math.ceil(e.clientX - box.getBoundingClientRect().left - rectWidth / 2) // 计算的是色块左边和外方块左边的距离
+        rightNum = Math.ceil(box.getBoundingClientRect().right - e.clientX - rectWidth / 2) // 计算色块右边和外方块右边的距离
+        topNum = Math.ceil(e.clientY - box.getBoundingClientRect().top - rectHeight / 2) // 计算色块上边和外方块上边的距离
+        bottNum = Math.ceil(box.getBoundingClientRect().bottom - e.clientY - rectHeight / 2) // 计算色块下边和外方块下边的距离
         // clientX：窗口鼠标的x坐标
         // getBoundingClientRect().left 元素的左边 距离窗口左边的 像素长度
 
-       
+        // 限制放大区域
+        leftNum <= 0 ? leftNum = 0 : "";
+        rightNum <= 0 ? leftNum = maxLeft : "";
+        topNum <= 0 ? topNum = 0 : "";
+        bottNum <= 0 ? topNum = maxtop : "";
+
         var left = leftNum + "px"
         var top = topNum + "px"
         if (leftNum >= 0 && rightNum >= 0) {
@@ -67,7 +73,7 @@
         if (topNum >= 0 && bottNum >= 0) {
             rect.style.top = top
         }
-    
+
         // show.style.backgroundImage = box.style.backgroundImage 
         /**
          * 如果有这里有十几张图片 我们把放大镜的效果写死的话
@@ -80,14 +86,12 @@
          * 而是用另一种方式 currentStyle（IE）跟 getComputedStyle。
          */
         var boxStyle = getStyle(box) // 获取style
-        show.style.backgroundImage =  boxStyle.backgroundImage // 传个url
-        show.style.backgroundPosition = leftNum * -proportion +"px "+topNum * -proportion +"px" //根据 proportion半透明色块比例倍数进行背景定位
+        show.style.backgroundImage = boxStyle.backgroundImage // 传个url
+        show.style.backgroundPosition = leftNum * -proportion + "px " + topNum * -proportion + "px" //根据 proportion半透明色块比例倍数进行背景定位
         show.style.backgroundSize = proportion * 100 + "% " // 放大倍数
     })
-    
-    
-    function getStyle(dom){
-        
+    function getStyle(dom) {
+
         // 封装一个获取样式的函数
         if (document.defaultView && document.defaultView.getComputedStyle) {
             return document.defaultView.getComputedStyle(dom);
@@ -95,10 +99,10 @@
             return dom.currentStyle;
         }
     }
-    
+
     box.addEventListener("mouseleave", function (e) {
         rect.style.opacity = 0
-        show.style.display = "none"    
+        show.style.display = "none"
     })
 })
 
