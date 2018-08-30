@@ -70,17 +70,25 @@
         for(var prop in dotChild){
             dotChild[prop].className = ""
         }
-       // console.log(dotChild[index])
-       // dotChild[index].className="active"
+       console.log(dotChild[index])
+       dotChild[index].className="active"
 
         if (direction == "right") {
             Natural = -1;
             index++;
+            if(index == dotted + 1){
+                index = 1
+            }
         } else if (direction == "left") {
             Natural = 1;
             index--
+            if(index == -1){
+                index = dotted
+            }
         }
+        console.log(index)
         if (key) {
+            clearInterval(timer)
             key = 0; // 关闭重复点击
             if (index < 0) {
                 index = dotted - 1
@@ -90,7 +98,7 @@
             timer = setInterval(function () {
                 speed = speed + con * Natural  // Natural  负数 -1 
                 boxUl.style.left = speed + "px"
-                if (Math.abs(speed) == Math.abs(myWidth * index)) {
+                if (Math.abs(speed) >= Math.abs(myWidth * index)) {
                     clearInterval(timer)
                     key = 1 // 开锁
                     if (index == dotted) {
