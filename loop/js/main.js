@@ -26,7 +26,6 @@
         boxUl = obj.boxUl, // 装载图片的ul 用于动态更变宽度
         dotted = obj.dotted; // 小圆点数量
 
-
     var myWidth = box.clientWidth; // 获取box宽度，用于修改div 及滑动
 
     // 初始化函数 首先生成小圆点 改变装载图片的ul宽度 
