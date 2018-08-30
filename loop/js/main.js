@@ -29,7 +29,6 @@
 
     var myWidth = box.clientWidth; // 获取box宽度，用于修改div 及滑动
 
-
     // 初始化函数 首先生成小圆点 改变装载图片的ul宽度 
     (function () {
         boxUl.style.width = (dotted + 1) * myWidth + "px"// 通过小圆点数 得知共有多少个图片 改变最长宽度 +1目的是实现轮播效果
