@@ -5,7 +5,6 @@
     if (Object.prototype.toString.call(obj) !== "[object Object]") {
         throw new Error("loop需要一个对象作为参数")
     }
-
     if (1 !== obj.box.nodeType) {
 
         /**
