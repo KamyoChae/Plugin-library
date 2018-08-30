@@ -15,7 +15,6 @@
          * nodeType ： 9 document
          * nodeType ： 11 documentFragment 文档碎片
          */
-
         // 如果这个节点不是元素节点 就抛出异常
         throw new Error("请绑定一个正确的dom节点作为渲染")
     }
