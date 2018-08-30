@@ -6,7 +6,6 @@
         throw new Error("loop需要一个对象作为参数")
     }
     if (1 !== obj.box.nodeType) {
-
         /**
          * 节点类型：nodeType 
          * nodeType ： 1 元素节点
