@@ -24,6 +24,7 @@ body{
     cursor: pointer;
 }
 .btn-left, .btn-right{
+    display: none;
     top: 50%;
     transform: translate(0,-50%);
     width: 40px;
@@ -84,6 +85,11 @@ body{
     height: inherit;
 }
 
+
 .active{
     background: #ff1302 !important;
+}
+
+.box:hover span{
+    display: block;
 }
