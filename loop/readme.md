@@ -1,5 +1,7 @@
 ![](https://github.com/KamyoChae/Plugin-library/blob/master/_images/%E8%BD%AE%E6%92%AD%E5%9B%BEloop.gif)
-插件使用方式
+
+
+### 插件使用方式
 ```javascript
 loop({
     box:element, // 包含点击按钮 图片组 小圆点的div
