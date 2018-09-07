@@ -1,18 +1,107 @@
- 
+ *{
+     margin: 0%;
+     padding: 0;
+ }
 body {
     background-color: #DCD9D4;
 }
 .container{
+
+    position: absolute;
     width: 100%;
-    height: 800px;
-    text-align: center; 
+    height: 600px;
+    text-align: center;  
 }
 .lrc{
+    position: relative;
     margin: 0 auto;
-    margin-top: 100px;
+    margin: 100px auto;
     font-size: 48px;
     width: 700px;
     text-align: center;
 }
+.cd-box{
+    position: relative; 
+    width: 260px;
+    margin: auto;
+}
+.cd{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-image:url(./user.jpg);
+    background-size:cover; 
+    margin: auto;
+ }
 
- 
+ .btn, .btnAfter{
+     position: absolute;
+     margin: auto;
+     left: 0;
+     right: 0;
+     top: 0;
+     bottom: 0;
+     
+ }
+ .btn{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .5);
+    cursor: pointer;
+    transition: all .5s;
+ }
+ .btnAfter{
+    width: 0;
+    height: 0;
+    border: 15px solid transparent; 
+    border-left: 20px solid #fff; 
+    transform: translate(25%,0);
+    transition: all .5s;
+ }
+
+ .larg1{
+    width: 260px;
+    height: 260px;
+    border: 1px solid #424242;
+    background: transparent;
+    animation: ani 2s infinite;
+ }
+ .larg2{
+    width: 230px;
+    height: 230px;
+    border: 1px solid #424242;
+    background: transparent;
+    border-radius: 50%;
+    transform: translate(0,0);
+} 
+@keyframes ani {
+    0%{
+        opacity: .2;
+        transform: scale(1)
+    }
+    50%{
+        opacity: .8;
+        transform: scale(.9)
+    }
+    100%{
+        opacity: .2;
+        transform: scale(1)
+    }
+}
+.rotate{
+    animation: rotate 15s linear infinite;
+}
+@keyframes rotate{
+    0%{
+        transform:rotateZ(0deg) 
+    }
+    100%{
+        transform: rotateZ(360deg)
+    }
+}
+
+.show{
+    text-align: center;
+    margin: auto;
+}

@@ -1,6 +1,5 @@
 
 var myWriter = new writer(document.getElementById("writer"))
-var obj = {};
 
 var lrcQueue // 借用队列思想
 (function () {
@@ -87,17 +86,54 @@ Object.prototype.render = function(array) {
 eval(render(lrcQueue))
 
 
+*/
+
+
+
+// 愉快的下午又开始了 
+// 经过上午的折腾 睡梦中隐约想到了解决的方式
+
+// 中午梦到的思路：先别管那么多，想捉田螺，撩起裤脚下河摸，发现一只捉一只！
+
+function render(arr) {
+    /**
+     * 根据构造函数 得出
+     * 1.我们需要输入歌词到typeString里面
+     * 2.根据上下两句歌词的时间计算出时间间隔 传入pauseFor
+     * 3.需要计算出这行歌词一共有几个字(通过字符串.length) 然后传入字数 删除掉所有字符 
+     * 3.将新的歌词传入下一句
+     * 4.最后执行
+     * 
+     * 发现规律：重复的typeString、pasuseFor和delectChar
+     * myWriter.typeString("that sounds good ")
+        .pauseFor(2000)
+        .delectChar(3)
+        .typeString("大帅比")
+        .start()
+    */
+    arr.forEach(function (ele, index) {
+        var dur = puassTime(arr, index)
+        myWriter.typeString(ele.enterText)
+            .pauseFor(dur)
+            .delectChar(ele.enterText.length)
+
+    })
+
+}
+render(lrcQueue)
+
 
 // 由于时间间隔计算量较大 我们独立出来封装成一个函数
 // arr:需要遍历的数组 index 数组索引号，用于计算前后
 function puassTime(arr, index) {
+    index += 1
     var result = null // 用于存储结果 返回
     // 00:04:60
     // 00:26:39
     //
-    // 如何计算两个数之间的间隔？忽略秒后面的那啥 查了资料，似乎不是毫秒 看不懂
-    // 第一种情况 后面的数比前面的大 直接减
-    // 第二种情况 后面的数比前面的小 后面的直接加上60 再减去前面的
+    // 如何计算两个数之间的间隔？
+    // 第一种情况 后面的数比前面的大 秒*100 加上毫秒 直接减
+    // 第二种情况 后面的数比前面的小 后面的直接加上60 *100 加上毫秒 再减去前面的
     // 完美！喵喵喵
     // 
     //
@@ -110,14 +146,70 @@ function puassTime(arr, index) {
     lastT = arr[index - 1].enterTime.split(":") // 分割成一个数组 里面有分秒
     nowT = arr[index].enterTime.split(":") // 分割成一个数组 里面有分秒
 
-    if (nowT[1]) {
-        if (nowT[1] < lastT[1]) {
-            result = nowT[1] + 60 - lastT[1]
+    nowSec = Number(nowT[1])  // 秒
+    nowMi = Number(nowT[2]) // 毫秒
+    lastSec = Number(lastT[1]) // 上局歌词的秒
+    lastMi = Number(lastT[2]) // 上句歌词的毫秒
+
+    if (nowSec) {
+
+        if (nowSec < lastSec) {
+            if (nowMi < lastMi) {
+                result = (nowSec + 59 - lastSec) * 100 + nowMi + 100 - lastMi
+            } else {
+                result = (nowSec + 60 - lastSec) * 100 + nowMi - lastMi
+            }
         } else {
-            result = nowT[1] - lastT[1]
+            if (nowMi < lastMi) {
+                result = (nowSec - 1 - lastSec) * 100 + nowMi + 100 - lastMi
+            } else {
+                result = (nowSec - lastSec) * 100 + nowMi - lastMi
+            }
+
         }
     }
-    return result * 1000
-}
-*/
 
+    if (index != 30) {
+        return result * 5
+    } else {
+        console.log(999, index)
+        // 这里用的是一个索引 写死了 
+        // 如果实际可以在副歌部分打个标记 前端获取的时候可以根据标记判断有没有到副歌部分
+        // 副歌部分 清除半个间隔时间
+        // 这个bug查了我一个小时 最后用手机秒表计时才找出bug 哭晕QAQ 喵喵喵
+        return result * 10
+    }
+
+}
+
+var btn = document.getElementsByClassName('btn')[0]
+var btnAfter = document.getElementsByClassName('btnAfter')[0]
+var cd = document.getElementsByClassName('cd')[0]
+var cdBox = document.getElementsByClassName('cd-box')[0]
+var audio = document.getElementsByTagName("audio")[0]
+var show = document.getElementsByClassName('show')[0]
+function playing() {
+    audio.play()
+    myWriter.start()
+}
+cdBox.addEventListener("click", function () {
+    console.log(lrcQueue)
+    playing()
+})
+var flag = true
+cd.addEventListener("click",function(){
+    if(flag){
+        flag = false
+        btn.classList.add('larg1')
+        btnAfter.classList.add('larg2')
+        cdBox.classList.add('rotate')
+        
+        show.style.display = "none"
+    }else{
+        flag = true
+        btn.classList.remove('larg1')
+        btnAfter.classList.remove('larg2')
+        cdBox.classList.remove('rotate')
+        show.style.display = "block"
+    }
+})
