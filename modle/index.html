@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>model</title>
+    <link rel="stylesheet" href="./lib/model.css">
+    <script src = "./lib/model.js"></script>
+</head>
+<body>
+    <button data-model-open = "model1">打开模态框</button>
+    <div id="model1" class="model" data-model-id="model1">
+        <div class="model_container">
+            <h6>我是第一个模态框</h6>
+            <p>
+                用户名：<input type="text">
+            </p>
+            <p>
+                密码：<input type="text">
+            </p>
+            <div>
+                <button data-model-open="model2">确定</button>
+                <button data-model-close="model1">取消</button>
+            </div>
+        </div>
+    </div>
+    <div class="model" data-model-id="model2">
+        <div class="model_container">
+            <h6>我是第二个模态框</h6>
+            <div>
+                <button>确定</button>
+                <button data-model-close="model2">取消</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var myModel = new model()
+        var model1 = document.getElementById("model1")
+        model1.addEventListener('model-opening',function(){
+            console.log(1111)
+        })
+        model1.addEventListener('model-closing',function(){
+            console.log(2222)
+        })
+    </script>
+</body>
+</html>
