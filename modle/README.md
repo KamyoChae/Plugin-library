@@ -27,3 +27,4 @@ popmodel.open('mypopbox1');	    //打开模态框 传值是html当中特殊属�
 popmodel.close('mypopbox1');	//关闭模态框 传值是html当中特殊属性的值
 ```
 
+![](https://github.com/KamyoChae/Plugin-library/blob/master/modle/model.gif)
