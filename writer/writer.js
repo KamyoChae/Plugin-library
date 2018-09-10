@@ -49,8 +49,6 @@ function writer(container){
     }  
     //定义typeString这个函数
     _this.typeString = function(string){
-
-        
         var characters = string.split(''); // 将这个string字符串分割成一个字符一个字符 存到characters里面
         characters.forEach(function(character){ // 遍历characters数组，将每一个值 作为参数传到一个函数addEventToQueue里面
             _this.addEventToQueue('ADD_STRING',character)
