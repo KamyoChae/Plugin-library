@@ -1,5 +1,4 @@
 function writer(container){
-
     /**
      * 这是一个构造函数
      * 
